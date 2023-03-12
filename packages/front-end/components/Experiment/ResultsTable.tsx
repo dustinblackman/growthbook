@@ -104,7 +104,17 @@ export default function ResultsTable({
             </th>
           )}
           {variations.map((v, i) => (
-            <th colSpan={i ? (fullStats ? 3 : 2) : 1} className="value" key={i}>
+            <th
+              colSpan={
+                i !== 0 && !v.name.toLowerCase().includes("control")
+                  ? fullStats
+                    ? 3
+                    : 2
+                  : 1
+              }
+              className="value"
+              key={i}
+            >
               <span className="text-muted font-weight-normal">{i}:</span>
               &nbsp;{v.name}
             </th>
@@ -116,17 +126,19 @@ export default function ResultsTable({
               <th className={clsx("value", `variation${i} text-center`)}>
                 Value
               </th>
-              {i > 0 && fullStats && (
-                <th
-                  className={`variation${i} text-center`}
-                  style={{ minWidth: 110 }}
-                >
-                  {statsEngine === "frequentist"
-                    ? "P-value"
-                    : "Chance to Beat Control"}
-                </th>
-              )}
-              {i > 0 && (
+              {i !== 0 &&
+                !v.name.toLowerCase().includes("control") &&
+                fullStats && (
+                  <th
+                    className={`variation${i} text-center`}
+                    style={{ minWidth: 110 }}
+                  >
+                    {statsEngine === "frequentist"
+                      ? "P-value"
+                      : "Chance to Beat Control"}
+                  </th>
+                )}
+              {i !== 0 && !v.name.toLowerCase().includes("control") && (
                 <th className={`variation${i} text-center`}>
                   Percent Change{" "}
                   {hasRisk && fullStats && (
@@ -149,7 +161,7 @@ export default function ResultsTable({
               <td className="value">
                 {users ? numberFormatter.format(users[i] || 0) : ""}
               </td>
-              {i > 0 && (
+              {i !== 0 && !v.name.toLowerCase().includes("control") && (
                 <>
                   {fullStats && <td className="empty-td"></td>}
                   <td className="p-0">
@@ -210,7 +222,8 @@ export default function ResultsTable({
                       users={stats?.users || 0}
                       className="value variation"
                     />
-                    {i > 0 &&
+                    {i !== 0 &&
+                      !v.name.toLowerCase().includes("control") &&
                       fullStats &&
                       (statsEngine === "frequentist" ? (
                         <PValueColumn
@@ -233,7 +246,8 @@ export default function ResultsTable({
                           snapshotDate={dateCreated}
                         />
                       ))}
-                    {i > 0 &&
+                    {i !== 0 &&
+                      !v.name.toLowerCase().includes("control") &&
                       (fullStats ? (
                         <PercentGraphColumn
                           barType={
