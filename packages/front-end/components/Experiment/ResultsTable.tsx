@@ -777,7 +777,7 @@ export default function ResultsTable({
                             renderLabelColumn(row.label, row.metric, row, 3)
                           )}
                         </td>
-                        {j > 0 ? (
+                        {j !== 0 && !v.name.toLowerCase().includes("control") ? (
                           <MetricValueColumn
                             metric={row.metric}
                             stats={baseline}
@@ -799,7 +799,7 @@ export default function ResultsTable({
                           })}
                           newUi={true}
                         />
-                        {j > 0 ? (
+                        {j !== 0 && !v.name.toLowerCase().includes("control") ? (
                           statsEngine === "bayesian" ? (
                             <ChanceToWinColumn
                               stats={stats}
@@ -847,7 +847,7 @@ export default function ResultsTable({
                           <td></td>
                         )}
                         <td className="graph-cell">
-                          {j > 0 ? (
+                          {j !== 0 && !v.name.toLowerCase().includes("control") ? (
                             <PercentGraph
                               barType={
                                 statsEngine === "frequentist"
@@ -911,7 +911,7 @@ export default function ResultsTable({
                             />
                           )}
                         </td>
-                        {j > 0 ? (
+                        {j !== 0 && !v.name.toLowerCase().includes("control") ? (
                           <PercentChangeColumn
                             metric={row.metric}
                             stats={stats}
