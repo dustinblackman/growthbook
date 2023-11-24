@@ -124,7 +124,7 @@ export default function ResultsTable_old({
           )}
           {variations.map((v, i) => (
             <th
-              colSpan={i ? (fullStats ? 3 : 2) : 1}
+              colSpan={i !== 0 && !v.name.toLowerCase().includes("control") ? (fullStats ? 3 : 2) : 1}
               className={`value variation with-variation-label variation${i} pb-2`}
               key={i}
               style={{ whiteSpace: i == 0 ? "nowrap" : "initial" }}
@@ -145,7 +145,7 @@ export default function ResultsTable_old({
               >
                 Value
               </th>
-              {i > 0 && fullStats && (
+              {i !== 0 && !v.name.toLowerCase().includes("control") && fullStats && (
                 <th
                   className={`variation${i} head-last-row text-center pt-2`}
                   style={{ minWidth: 110 }}
@@ -197,7 +197,7 @@ export default function ResultsTable_old({
                   )}
                 </th>
               )}
-              {i > 0 && (
+              {i !== 0 && !v.name.toLowerCase().includes("control") && (
                 <th className={`variation${i} head-last-row text-center pt-2`}>
                   Percent Change{" "}
                   {fullStats && (
@@ -274,7 +274,7 @@ export default function ResultsTable_old({
               <td className="value">
                 {users ? numberFormatter.format(users[i] || 0) : ""}
               </td>
-              {i > 0 && (
+              {i !== 0 && !v.name.toLowerCase().includes("control") && (
                 <>
                   {fullStats && <td className="empty-td"></td>}
                   <td className="p-0">
@@ -335,7 +335,7 @@ export default function ResultsTable_old({
                       users={stats?.users || 0}
                       className="value variation"
                     />
-                    {i > 0 &&
+                    {i !== 0 && !v.name.toLowerCase().includes("control") &&
                       fullStats &&
                       (statsEngine === "frequentist" ? (
                         <PValueColumn_old
@@ -359,7 +359,7 @@ export default function ResultsTable_old({
                           snapshotDate={dateCreated}
                         />
                       ))}
-                    {i > 0 &&
+                    {i !== 0 && !v.name.toLowerCase().includes("control") &&
                       (fullStats ? (
                         <PercentGraphColumn
                           barType={
